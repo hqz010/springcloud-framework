@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git: #配置git仓库地址
-          uri: https://github.com/hqz010/springcloud-config.git #具体的配置文件的git地址
+          uri: https://github.com/hqz010/springcloud-framework/tree/master/springcloud-config/src/main/resources/config #具体的配置文件的git地址
           #username:
           #password:
   kafka:
