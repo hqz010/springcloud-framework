@@ -1,0 +1,11 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+server:
+  port: 9211
+spring:
+  application:
+    name: zipkin
+  sleuth:
+    enabled: false

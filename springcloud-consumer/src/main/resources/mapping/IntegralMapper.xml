@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hqz.springcloudconsumer.dao.IntegralMapper">
+  <resultMap id="BaseResultMap" type="com.hqz.springcloudconsumer.entity.Integral">
+    <id column="user_account" jdbcType="VARCHAR" property="userAccount" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_account, integral
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from integral
+    where user_account = #{userAccount,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from integral
+    where user_account = #{userAccount,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hqz.springcloudconsumer.entity.Integral">
+    insert into integral (user_account, integral)
+    values (#{userAccount,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hqz.springcloudconsumer.entity.Integral">
+    insert into integral
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userAccount != null">
+        user_account,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userAccount != null">
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hqz.springcloudconsumer.entity.Integral">
+    update integral
+    <set>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_account = #{userAccount,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hqz.springcloudconsumer.entity.Integral">
+    update integral
+    set integral = #{integral,jdbcType=INTEGER}
+    where user_account = #{userAccount,jdbcType=VARCHAR}
+  </update>
+</mapper>

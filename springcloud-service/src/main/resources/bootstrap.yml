@@ -1,0 +1,47 @@
+server:
+  port: 8083
+
+# 心跳检测检测与续约时间
+# 测试时将值设置设置小些，保证服务关闭后注册中心能及时踢出服务
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 1  # 每间隔1s，向服务端发送一次心跳，证明自己依然”存活“
+    lease-expiration-duration-in-seconds: 2 #告诉服务端，如果我2s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8081/eureka/}  #http://localhost:8081/eureka/
+
+spring:
+  application:
+    name: service1
+  #profiles:   配置所属环境dev,test,uat,prod
+  #  active: dev
+  cloud:
+    config:
+      profile: dev #对应配置服务中的{profile}
+      discovery:
+        enabled: true
+        service-id: config-server  #指定spring cloud config服务的application name
+      #git: #配置git仓库地址
+      #  uri: https://github.com/hqz010/springcloud-config.git
+  rabbitmq:
+    host: ${MQ_IP}  #172.30.40.4
+    port: ${MQ_PORT}  #5672
+    username: ${MQ_USERNAME} #admin
+    password: ${MQ_PASSWORD}  #rabbitmq
+  boot:
+      admin:
+        client:
+          url: http://localhost:5000
+  datasource:
+    url: ${DATASOURCE_URL}  #
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: ${DATASOURCE_USERNAME}  #
+    password: ${DATASOURCE_PASSWORD}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #bus-refresh

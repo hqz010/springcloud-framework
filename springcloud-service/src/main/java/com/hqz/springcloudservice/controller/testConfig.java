@@ -1,0 +1,22 @@
+package com.hqz.springcloudservice.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@Configuration
+@EnableAutoConfiguration
+@RefreshScope
+public class testConfig {
+    @Value("${myname}") // git配置文件里的key
+            String myname;
+
+    @RequestMapping(value = "/hi")
+    public String hi(){
+        return myname;
+    }
+}

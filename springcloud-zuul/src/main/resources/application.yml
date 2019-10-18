@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: service-zuul
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+
+zuul:
+  prefix: /v1   #版本号
+  routes:
+    api-consumer:
+      path: /api-consumer/**
+      serviceId: consumer1
+      sensitiveHeaders: "*"   #解决springcloud项目中经过网关zuul转发请求后发生session失效问题，这是由于zuul默认会丢弃原来的session并生成新的session
+    api-service:
+      path: /api-service/**
+      serviceId: service1

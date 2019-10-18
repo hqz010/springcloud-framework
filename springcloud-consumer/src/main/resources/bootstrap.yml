@@ -1,0 +1,61 @@
+server:
+  port: 8084
+
+# 心跳检测检测与续约时间
+# 测试时将值设置设置小些，保证服务关闭后注册中心能及时踢出服务
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 1  # 每间隔1s，向服务端发送一次心跳，证明自己依然”存活“
+    lease-expiration-duration-in-seconds: 2 #告诉服务端，如果我2s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+
+spring:
+  application:
+    name: consumer1
+  cloud:
+    config:
+      profile: dev #对应配置服务中的{profile}
+      discovery:
+        enabled: true
+        service-id: config-server  #指定spring cloud config服务的application name
+      #git: #配置git仓库地址
+      #  uri: https://github.com/hqz010/springcloud-config.git
+    #bus:
+    #  refresh:
+    #    enabled: true
+  #kafka:
+  #  bootstrap-servers: 192.168.140.121:9095
+#  redis:
+#    host: 192.168.140.120
+#    port: 19000
+#    #password:
+#    timeout: 6000ms
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-wait: -1ms
+#        max-idle: 8
+#        min-idle: 0
+#    database: 0
+  #指定zipkin中心
+  zipkin:
+    base-url: http://localhost:9211
+
+feign:
+  hystrix:
+    enabled: true   #开启Feign Hystrix 支持
+
+logging:
+  file: logs/${spring.application.name}-${server.port}.log
+  level:
+    org:
+      springframework:
+        boot: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
